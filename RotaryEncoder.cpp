@@ -4,10 +4,12 @@ RotaryEncoder::RotaryEncoder(byte A_pin, byte B_pin)
 {
     pin[A] = A_pin;
     pin[B] = B_pin;
-    last[A] = digitalRead(A_pin);
-    last[B] = digitalRead(B_pin);
-    attachInterrupt(pin[A], &Achanged, CHANGE);
-    attachInterrupt(pin[B], &Bchanged, CHANGE);
+    pinMode(pin[A], INPUT_PULLUP);
+    pinMode(pin[B], INPUT_PULLUP);
+    last[A] = digitalRead(pin[A]);
+    last[B] = digitalRead(pin[B]);
+    attachInterrupt(digitalPinToInterrupt(pin[A]), Achanged, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(pin[B]), Bchanged, CHANGE);
 }
 
 int RotaryEncoder::getPosition()
