@@ -6,78 +6,25 @@ RotaryEncoder::RotaryEncoder(byte A_pin, byte B_pin)
     pin[B] = B_pin;
     pinMode(pin[A], INPUT_PULLUP);
     pinMode(pin[B], INPUT_PULLUP);
-    last[A] = digitalRead(pin[A]);
-    last[B] = digitalRead(pin[B]);
-    attachInterrupt(digitalPinToInterrupt(pin[A]), Achanged, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(pin[B]), Bchanged, CHANGE);
+    if (digitalRead(pin[A])) AB |= 0x02;
+    if (digitalRead(pin[B])) AB |= 0x01;
+    attachInterrupt(digitalPinToInterrupt(pin[A]), change, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(pin[B]), change, CHANGE);
 }
 
-int RotaryEncoder::getPosition()
+void RotaryEncoder::checkPosition()
 {
-    return position;
+    AB <<= 2;
+    AB &= 0x0f;
+    if (digitalRead(this->pin[A])) AB |= 0x02;
+    if (digitalRead(this->pin[B])) AB |= 0x01;
+    if ((AB % 3) == 0 || (AB % 5) == 0) return;
+    if (AB == 2 || AB == 4 || AB == 11 || AB == 13) ++position;
+    else --position;
 }
 
-int RotaryEncoder::setPosition(int position)
+void change()
 {
-    this->position = position;
-}
-
-bool RotaryEncoder::getDirection()
-{
-    switch (changed_signal)
-    {
-    case A:
-        switch (last[A])
-        {
-        case 0:
-            return last[B];
-            break;
-        
-        case 1:
-            return !last[B];
-            break;
-        }
-        break;
-    
-    case B:
-        switch (last[B])
-        {
-        case 0:
-            return !last[A];
-            break;
-        
-        case 1:
-            return last[A];
-            break;
-        }
-        break;
-    }
-}
-
-void RotaryEncoder::isRotating()
-{
-    switch (getDirection())
-    {
-    case CW:
-        ++position;
-        break;
-    
-    case CCW:
-        --position;
-        break;
-    }
-}
-
-void RotaryEncoder::Achanged()
-{
-    changed_signal = A;
-    isRotating();
-    last[A] = !last[A];
-}
-
-void RotaryEncoder::Bchanged()
-{
-    changed_signal = B;
-    isRotating();
-    last[B] = !last[B];
+    if (ptr_RE == 0) return;
+    ptr_RE->checkPosition();
 }
