@@ -24,7 +24,7 @@ void RotaryEncoder::checkPosition()
     case 75:
         ++position;
         break;
-    
+
     case 135:
         --position;
         break;
