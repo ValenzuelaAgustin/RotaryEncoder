@@ -6,8 +6,6 @@ RotaryEncoder::RotaryEncoder(byte A_pin, byte B_pin)
     pin[B] = B_pin;
     pinMode(pin[A], INPUT_PULLUP);
     pinMode(pin[B], INPUT_PULLUP);
-    if (digitalRead(pin[A])) AB |= 0x02;
-    if (digitalRead(pin[B])) AB |= 0x01;
 }
 
 void RotaryEncoder::begin(void(*ISR)())
