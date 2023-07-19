@@ -14,7 +14,7 @@ public:
 
     void checkPosition();
 
-    int position = 0;
+    volatile int position = 0;
 
 private:
     enum {A = 0, B = 1};
