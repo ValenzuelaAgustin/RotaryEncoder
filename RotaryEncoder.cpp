@@ -19,25 +19,15 @@ void RotaryEncoder::begin(void(*ISR)())
 void RotaryEncoder::checkPosition()
 {
     AB <<= 2;
-    AB &= 0x0f;
     if (digitalRead(this->pin[A])) AB |= 0x02;
     if (digitalRead(this->pin[B])) AB |= 0x01;
-    if ((AB % 3) == 0 || (AB % 5) == 0) return;
     switch (AB)
     {
-    case 2:
+    case 75:
         ++position;
         break;
-    case 4:
-        ++position;
-        break;
-    case 11:
-        ++position;
-        break;
-    case 13:
-        ++position;
-        break;
-    default:
+    
+    case 135:
         --position;
         break;
     }
