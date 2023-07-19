@@ -8,8 +8,12 @@ RotaryEncoder::RotaryEncoder(byte A_pin, byte B_pin)
     pinMode(pin[B], INPUT_PULLUP);
     if (digitalRead(pin[A])) AB |= 0x02;
     if (digitalRead(pin[B])) AB |= 0x01;
-    attachInterrupt(digitalPinToInterrupt(pin[A]), change, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(pin[B]), change, CHANGE);
+}
+
+void RotaryEncoder::begin(void(*ISR)())
+{
+    attachInterrupt(digitalPinToInterrupt(pin[A]), ISR, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(pin[B]), ISR, CHANGE);
 }
 
 void RotaryEncoder::checkPosition()
@@ -19,12 +23,22 @@ void RotaryEncoder::checkPosition()
     if (digitalRead(this->pin[A])) AB |= 0x02;
     if (digitalRead(this->pin[B])) AB |= 0x01;
     if ((AB % 3) == 0 || (AB % 5) == 0) return;
-    if (AB == 2 || AB == 4 || AB == 11 || AB == 13) ++position;
-    else --position;
-}
-
-void change()
-{
-    if (ptr_RE == 0) return;
-    ptr_RE->checkPosition();
+    switch (AB)
+    {
+    case 2:
+        ++position;
+        break;
+    case 4:
+        ++position;
+        break;
+    case 11:
+        ++position;
+        break;
+    case 13:
+        ++position;
+        break;
+    default:
+        --position;
+        break;
+    }
 }

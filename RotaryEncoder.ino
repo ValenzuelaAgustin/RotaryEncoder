@@ -1,19 +1,24 @@
 #include "RotaryEncoder.hpp"
 
-RotaryEncoder RE1(13, 12);
 int last = 0;
+RotaryEncoder RE(13, 12);
+RotaryEncoder* ptr_RE = &RE;
+void ISR()
+{
+    ptr_RE->checkPosition();
+}
 
 void setup()
 {
     Serial.begin(115200);
-    ptr_RE = &RE1;
+    RE.begin(ISR);
 }
 
 void loop()
 {
-  if (last != RE1.position)
+  if (last != RE.position)
   {
-    last = RE1.position;
+    last = RE.position;
     Serial.print("Rotary Encoder Pos: ");
     Serial.println(last);
   }

@@ -6,24 +6,20 @@
 #define byte unsigned char
 #endif
 
-enum {A = 0, B = 1};
-
-void change();
-
 class RotaryEncoder
 {
 public:
     RotaryEncoder(byte A_pin, byte B_pin);
+    void begin(void(*ISR)());
 
     void checkPosition();
 
     int position = 0;
 
 private:
+    enum {A = 0, B = 1};
     byte pin[2];
     byte AB;
 };
-
-RotaryEncoder* ptr_RE = 0;
 
 #endif
