@@ -12,9 +12,10 @@ public:
     volatile int position;
 
 private:
-    enum {A = 0, B = 1};
+    enum {A = 0, B = 1, CW = 75, CCW = 135};
     byte pin[2];
     byte AB;
+    byte ab;
 };
 
 #endif

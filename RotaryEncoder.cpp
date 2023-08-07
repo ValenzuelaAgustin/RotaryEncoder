@@ -16,15 +16,18 @@ void RotaryEncoder::begin(void(*ISR)())
 
 void RotaryEncoder::checkPosition()
 {
+    ab = 0;
+    if (digitalRead(pin[A])) ab |= 0x02;
+    if (digitalRead(pin[B])) ab |= 0x01;
+    if ((AB & 0x03) == ab) return;
     AB <<= 2;
-    if (digitalRead(pin[A])) AB |= 0x02;
-    if (digitalRead(pin[B])) AB |= 0x01;
+    AB |= ab;
     switch (AB)
     {
-    case 75:
+    case CW:
         ++position;
         break;
-    case 135:
+    case CCW:
         --position;
         break;
     }
