@@ -13,9 +13,9 @@ public:
 
 private:
     enum {A = 0, B = 1, CW = 75, CCW = 135};
-    byte pin[2];
-    byte AB;
-    byte ab;
+    volatile byte pin[2];
+    volatile byte AB;
+    volatile byte ab;
 };
 
 #endif
