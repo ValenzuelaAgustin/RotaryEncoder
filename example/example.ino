@@ -6,7 +6,6 @@ https://wokwi.com/projects/370517415324581889
 */
 
 int counter = 0;
-unsigned long _time;
 
 RotaryEncoder RE(15, 2);
 PushButton REButton(4, INPUT_PULLUP);
