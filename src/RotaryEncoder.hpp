@@ -5,17 +5,17 @@
 class RotaryEncoder
 {
 public:
-    RotaryEncoder(byte A_pin, byte B_pin);
+    RotaryEncoder(uint8_t A_pin, uint8_t B_pin);
     void begin(void(*ISR)());
     void checkPosition();
 
-    volatile int position;
+    volatile uint8_t position;
 
 private:
     enum {A = 0, B = 1, CW = 75, CCW = 135};
-    volatile byte pin[2];
-    volatile byte AB;
-    volatile byte ab;
+    volatile uint8_t pin[2];
+    volatile uint8_t AB;
+    volatile uint8_t ab;
 };
 
 #endif

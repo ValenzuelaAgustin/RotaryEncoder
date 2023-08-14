@@ -1,6 +1,6 @@
 #include "RotaryEncoder.hpp"
 
-RotaryEncoder::RotaryEncoder(byte A_pin, byte B_pin)
+RotaryEncoder::RotaryEncoder(uint8_t A_pin, uint8_t B_pin)
 {
     pin[A] = A_pin;
     pin[B] = B_pin;
