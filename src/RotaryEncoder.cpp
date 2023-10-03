@@ -16,9 +16,9 @@ void RotaryEncoder::begin(void(*ISR)())
 
 void RotaryEncoder::checkPosition()
 {
-    ab = 0 + digitalRead(pin[A]) * 0x02 + digitalRead(pin[B]) * 0x01;
+    ab = (bool)digitalRead(pin[A]) * 0x02 + (bool)digitalRead(pin[B]) * 0x01;
     if ((AB & 0x03) == ab) return;
     AB <<= 2;
     AB |= ab;
-    position += 1 * (AB == CW) - 1 * (AB == CCW);
+    position += (AB == CW) - (AB == CCW);
 }
