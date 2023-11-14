@@ -9,7 +9,7 @@ public:
     void begin(void(*ISR)());
     void checkPosition();
 
-    volatile uint8_t position;
+    volatile int16_t position;
 
 private:
     enum {A = 0, B = 1, CW = 75, CCW = 135};
