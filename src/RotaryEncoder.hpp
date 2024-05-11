@@ -9,13 +9,13 @@ public:
     void begin(void(*ISR)());
     void checkPosition();
 
-    volatile int16_t position;
+    volatile int16_t position = 0;
 
 private:
     enum {A = 0, B = 1, CW = 75, CCW = 135};
     volatile uint8_t pin[2];
-    volatile uint8_t AB;
-    volatile uint8_t ab;
+    volatile uint8_t AB = 0;
+    volatile uint8_t ab = 0;
 };
 
 #endif
