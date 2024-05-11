@@ -14,7 +14,7 @@ public:
 private:
     enum {A = 0, B = 1, CW = 75, CCW = 135};
     volatile uint8_t pin[2];
-    volatile uint8_t AB = 0;
+    volatile uint8_t AB = 0xff;
     volatile uint8_t ab = 0;
 };
 
